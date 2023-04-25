@@ -12,22 +12,22 @@ def returnIndex(target, arr):
 
 iChoice = 0
 cChoice = 'y'
-tempPayment = 0
-tempTotal = 0
-index = 0
-total = 0
-count = 0
 transactions = []
-sChoice = 'y'
-order = ''
 iceCreams = ["Mango Pop", "Organic Vanilla", "Strawberry Shortcake and Ice Cream", "Cold Coffee and Vanilla Float", "Black Current", "Cotton Candy Flavour Scoop", "Nuts and Caramel"]
 iceCreamPrices = [2.5, 3.5, 5, 4, 2, 3, 4]
-numOrders = [0, 0, 0, 0, 0, 0, 0]
 businessIT = [0, 0, 0, 0, 0, 0, 0]
 
 print("Welcome to Tom and Jerry's Ice Cream Joint!")
 
 while(cChoice == 'y'):
+    tempPayment = 0
+    numOrders = [0, 0, 0, 0, 0, 0, 0]
+    tempTotal = 0
+    order = ''
+    sChoice = 'y'
+    index = 0
+    total = 0
+    count = 0
     print("What would you like to do?")
     iChoice = int(input("1. View menu and order\n2. View lifelong transactions in database\n3. View business intelligence\n4. View menu database\n> "))
 
@@ -90,9 +90,12 @@ while(cChoice == 'y'):
     # reading businessIT to console
     elif iChoice == 3:
         fa = open("data.txt", "r")
+        contents = fa.read()
+
         for i in range(len(iceCreams)):
-            if fa.readline() == iceCreams[i]:
-                businessIT[i] = businessIT[i] + 1
+            if iceCreams[i] in contents:
+                count = contents.count(iceCreams[i])
+                businessIT[i] = count
         print("Ice cream type: Quantity sold")
         for i in range(len(businessIT)):
             print(iceCreams[i] + ': ' + str(businessIT[i]))
@@ -115,12 +118,3 @@ while(cChoice == 'y'):
         conn.close()
 
     cChoice = input("Return to menu(y/n): ")
-
-
-
-
-
-
-
-
-
