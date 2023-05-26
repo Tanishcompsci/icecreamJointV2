@@ -66,8 +66,11 @@ def readMenuFromData():
     cur = conn.cursor()
     cur.execute('SELECT * FROM ice')
     rows = cur.fetchall()
-    for row in rows:
+    count = 1
+    for row in reversed(rows):
+        print(str(count) + ". ", end="")
         print(f"{'$' + str(row[0])} | {row[1]}")  # printing the content with a $ next to the price
+        count+=1
     # Closing the connection
     conn.close()
 
