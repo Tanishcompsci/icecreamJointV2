@@ -1,4 +1,5 @@
 from functions import*
+import requests
 
 iChoice = 0
 cChoice = 'y'
@@ -18,13 +19,13 @@ while cChoice == 'y' or cChoice == 'Y':
     order = ''
     sChoice = 'y'
     print("What would you like to do?")
-    iChoice = int(input("1. View menu and order\n2. View lifelong transactions in database\n3. View business intelligence\n4. View menu database\n> "))
+    iChoice = int(input("1. View menu and order\n2. View lifelong transactions in database\n3. View business intelligence\n4. View menu database in API\n> "))
 
     if iChoice == 1:
 
         # asking for orders
         while sChoice == 'y':
-            listOptions(iceCreams, iceCreamPrices) # lists the menu
+            readMenuFromData() # lists the menu
             getOrder(numOrders, iceCreams, transactions)  # asks user for their order
             sChoice = input("Would you like to order another ice cream? y/n\n> ")
 
@@ -53,6 +54,6 @@ while cChoice == 'y' or cChoice == 'Y':
 
     # reading menu database to console
     elif iChoice == 4:
-        readMenuFromData()
+        returnAPICall()
 
     cChoice = input("Return to menu(y/n): ")
