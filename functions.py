@@ -1,10 +1,25 @@
+import psycopg2
+import requests
+import requests
 # function for returning index
 def returnFirstIndex(target, arr):
     for i in range(len(arr)):
         if arr[i] == target:
             return i
 
+def returnAPICall():
+    BASE = "http://127.0.0.1:5000/"
 
+    flavorsPrice = [{'name': "Mango Pop", 'price': 2.5},
+                    {'name': "Organic Vanilla", 'price': 3.5},
+                    {'name': "Strawberry Shortcake and Ice Cream", 'price': 5},
+                    {'name': "Cold Coffee and Vanilla Float", 'price': 4},
+                    {'name': "Black Current", 'price': 2},
+                    {'name': "Cotton Candy Flavour Scoop", 'price': 3},
+                    {'name': "Nuts and Caramel", 'price': 4}]
+    for i in range(len(flavorsPrice)):
+        response = requests.put(BASE + "iceCream/" + str(i), flavorsPrice[i])
+        print(response.json())
 # functions takes total and prompts user for payment
 def runCashRegister(total, tempTotal):
     print("\nTotal: $", end="")
@@ -73,8 +88,6 @@ def addOrder(numOrders, iceCreams, order, count):
                 order += ' and ' + str(numOrders[i]) + ' ' + iceCreams[i]
             count += 1
     return order
-  
-#adding order string to a file
 def orderToFile(order, total):
     order += '; and provides $' + str(total) + ' for payment'
     writer = open("orders.txt", "a")  # a = write to, r = read to
@@ -95,20 +108,20 @@ def readData(iceCreams, businessIT):
     for i in range(len(businessIT)):
         print(iceCreams[i] + ': ' + str(businessIT[i]))
 
-# adding transactions list to a file
+
 def addArrayListToFile(transactions):
     data = open("data.txt", "a")  # a = write to, r = read to
     for i in range(len(transactions)):
         data.write(transactions[i] + '\n')
     data.close()
 
-# lsiting contents from given parallel arrays
+
 def listOptions(iceCreams, iceCreamPrices):
     for i in range(len(iceCreams)):
         print(str(i + 1) + ". " + iceCreams[i] + ': $', end="")
         print("%.2f" % iceCreamPrices[i])
 
-# prompting user to order
+
 def getOrder(numOrders, iceCreams, transactions):
     iChoice = int(input("Enter the numer associated with your ice cream choice: "))
     numOrders[iChoice - 1] += 1
